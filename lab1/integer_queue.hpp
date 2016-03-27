@@ -24,5 +24,4 @@ int IntegerQueueFront(const IntegerQueue & _queue);
 
 void IntegerQueuePrint(const IntegerQueue & queue, std::ostream & stream);
 
-
 #endif // _INTEGER_QUEUE_HPP_
