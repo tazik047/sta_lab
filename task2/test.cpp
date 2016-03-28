@@ -20,7 +20,7 @@ int main()
 	// убеждаемся, что в начале очереди стоит первый массив
 	assert(pFrontArraySize == 10 && pFrontArray == arr1);
 
-	// заполняем все очередь
+	// заполняем всю очередь
 	DoubleArrayQueuePush(*pQ, arr1, 10);
 	DoubleArrayQueuePush(*pQ, arr1, 10);
 	DoubleArrayQueuePush(*pQ, arr1, 10);
