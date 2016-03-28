@@ -20,7 +20,22 @@ int main()
 	// убеждаемся, что в начале очереди стоит первый массив
 	assert(pFrontArraySize == 10 && pFrontArray == arr1);
 
+	// заполняем все очередь
+	DoubleArrayQueuePush(*pQ, arr1, 10);
+	DoubleArrayQueuePush(*pQ, arr1, 10);
+	DoubleArrayQueuePush(*pQ, arr1, 10);
+
+	// проверям что очередь заполнена
+	assert(DoubleArrayQueueIsFull(*pQ));
+
+	// очищаем очередь
+	DoubleArrayQueueClear(*pQ);
+
+	// проверяем что очередь пуста
+	assert(DoubleArrayQueueIsEmpty(*pQ));
+
 	// уничтожаем очередь
 	DoubleArrayQueueDestroy(pQ);
+
 	return 0;
 }
