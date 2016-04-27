@@ -2,7 +2,7 @@
 #include "integer_set.hpp"
 
 const int PUPILS_COUNT = 10;
-const int CARD_COUNT = 5;
+const int CARD_COUNT = 50;
 IntegerSet* fullCardSet;
 IntegerSet* pupils[PUPILS_COUNT];
 
