@@ -16,7 +16,7 @@ bool isWin()
 
 		if (IntegerSetIsEmpty(*differents))
 		{
-			std::cout << "Pupil #" << (i + 1) << " wins" << std::endl;
+			std::cout << "Pupil #" << (i + 1) << " won." << std::endl;
 			IntegerSetDestroy(differents);
 			return true;
 		}
