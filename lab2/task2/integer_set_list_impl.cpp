@@ -135,37 +135,22 @@ void IntegerSetDifference(const IntegerSet & _set1,
 
 bool IntegerSetIsSubset(const IntegerSet & _set1, const IntegerSet & _set2)
 {
-	if (IntegerSetEqual(_set1, _set2))
+	IntegerList::Node * pNode = _set1.m_data.m_pFirst;
+	while (pNode)
 	{
-		return true;
+		if (!IntegerSetHasKey(_set2, pNode->m_value))
+		{
+			return false;
+		}
+		pNode = pNode->m_pNext;
 	}
 
-	IntegerSet * differents = IntegerSetCreate();
-
-	IntegerSetDifference(_set1, _set2, *differents);
-	bool result1 = IntegerSetIsEmpty(*differents);
-
-	IntegerSetDifference(_set2, _set1, *differents);
-	bool result2 = IntegerSetIsEmpty(*differents);
-
-	IntegerSetDestroy(differents);
-
-	return result1 && !result2;
+	return true;
 }
 
 bool IntegerSetEqual(const IntegerSet & _set1, const IntegerSet & _set2)
 {
-	IntegerSet * differents = IntegerSetCreate();
-
-	IntegerSetDifference(_set1, _set2, *differents);
-	bool result1 = IntegerSetIsEmpty(*differents);
-
-	IntegerSetDifference(_set2, _set1, *differents);
-	bool result2 = IntegerSetIsEmpty(*differents);
-
-	IntegerSetDestroy(differents);
-
-	return result1 && result2;
+	return IntegerSetIsSubset(_set1, _set2) && IntegerSetIsSubset(_set2, _set1);
 }
 
 int IntegerSetMinKey(const IntegerSet & _set)
