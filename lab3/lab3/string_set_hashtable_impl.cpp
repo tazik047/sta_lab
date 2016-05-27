@@ -37,7 +37,7 @@ bool StringSetIsEmpty ( const StringSet & _set )
 }
 
 
-bool StringSetHasKey ( const StringSet & _set, int _key )
+bool StringSetHasKey ( const StringSet & _set, std::string _key )
 {
     StringList::Node * pNode = _set.m_data.m_pFirst;
     while ( pNode )
@@ -50,10 +50,14 @@ bool StringSetHasKey ( const StringSet & _set, int _key )
 }
 
 
-void StringSetInsertKey ( StringSet & _set, int _key )
+void StringSetInsertKey ( StringSet & _set, std::string _key )
 {
-    if ( ! StringSetHasKey( _set, _key ) )
-        StringListPushBack( _set.m_data, _key );
+	if (!StringSetHasKey(_set, _key))
+	{
+		std::string item = _key.copy()
+		HashTableInsert( *_set.m_data, _key, _key );
+	}
+        
 }
 
 
