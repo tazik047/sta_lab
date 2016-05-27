@@ -49,11 +49,27 @@ int HashTableNumElements ( const HashTable & _ht )
     return _ht.m_numOccupied;
 }
 
+bool HashTableIsEmpty(const HashTable & _ht)
+{
+	return _ht.m_numOccupied == 0;
+}
+
 
 unsigned int HashCode(std::string _key)
 {
-    unsigned int hashCode = _key;
-    return hashCode;
+	unsigned int hash = 0;
+	unsigned int i = 0;
+	for (; i < _key.length; ++i)
+	{
+		hash += _key[i];
+		hash += (hash << 10);
+		hash ^= (hash >> 6);
+	}
+	hash += (hash << 3);
+	hash ^= (hash >> 11);
+	hash += (hash << 15);
+
+	return hash;
 }
 
 

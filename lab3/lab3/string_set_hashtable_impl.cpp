@@ -33,7 +33,7 @@ void StringSetClear ( StringSet & _set )
 
 bool StringSetIsEmpty ( const StringSet & _set )
 {
-    return ( _set.m_data );
+	return HashTableIsEmpty(*_set.m_data);
 }
 
 

@@ -13,6 +13,8 @@ void HashTableClear ( HashTable & _ht );
 
 int HashTableNumElements ( const HashTable & _ht );
 
+bool HashTableIsEmpty(const HashTable & _ht);
+
 void HashTableInsert(HashTable & _ht, std::string _key, std::string _value);
 
 std::string HashTableGet ( const HashTable & _ht, std::string _key );
