@@ -6,84 +6,84 @@
 
 struct StringSet
 {
-    HashTable* m_data;
+	HashTable* m_data;
 };
 
 
-StringSet * StringSetCreate ()
+StringSet * StringSetCreate()
 {
-    StringSet * pSet = new StringSet;
+	StringSet * pSet = new StringSet;
 	pSet->m_data = HashTableCreate(100);
-    return pSet;
+	return pSet;
 }
 
 
-void StringSetDestroy ( StringSet * _pSet )
+void StringSetDestroy(StringSet * _pSet)
 {
-    HashTableDestroy( _pSet->m_data );
-    delete _pSet;
+	HashTableDestroy(_pSet->m_data);
+	delete _pSet;
 }
 
 
-void StringSetClear ( StringSet & _set )
+void StringSetClear(StringSet & _set)
 {
-    HashTableClear( *_set.m_data );
+	HashTableClear(*_set.m_data);
 }
 
 
-bool StringSetIsEmpty ( const StringSet & _set )
+bool StringSetIsEmpty(const StringSet & _set)
 {
 	return HashTableIsEmpty(*_set.m_data);
 }
 
 
-bool StringSetHasKey ( const StringSet & _set, std::string _key )
+bool StringSetHasKey(const StringSet & _set, std::string _key)
 {
-    StringList::Node * pNode = _set.m_data.m_pFirst;
-    while ( pNode )
-    {
-        if ( pNode->m_value == _key )
-            return true;
-        pNode = pNode->m_pNext;
-    }
-    return false;
+	StringList::Node * pNode = _set.m_data.m_pFirst;
+	while (pNode)
+	{
+		if (pNode->m_value == _key)
+			return true;
+		pNode = pNode->m_pNext;
+	}
+	return false;
 }
 
 
-void StringSetInsertKey ( StringSet & _set, std::string _key )
+void StringSetInsertKey(StringSet & _set, std::string _key)
 {
 	if (!StringSetHasKey(_set, _key))
 	{
 		std::string item = _key.copy()
-		HashTableInsert( *_set.m_data, _key, _key );
+			HashTableInsert(*_set.m_data, _key, _key);
 	}
-        
+
 }
 
 
-void StringSetDeleteKey ( StringSet & _set, int _key )
+void StringSetDeleteKey(StringSet & _set, int _key)
 {
-    StringList::Node * pNode = _set.m_data.m_pFirst;
-    while ( pNode )
-    {
-        if ( pNode->m_value == _key )
-        {
-            StringListDeleteNode( _set.m_data, pNode );
-            return;
-        }
-        pNode = pNode->m_pNext;
-    }
+	StringList::Node * pNode = _set.m_data.m_pFirst;
+	while (pNode)
+	{
+		if (pNode->m_value == _key)
+		{
+			StringListDeleteNode(_set.m_data, pNode);
+			return;
+		}
+		pNode = pNode->m_pNext;
+	}
 
-    assert( !"Key is unavailble!" );
+	assert(!"Key is unavailble!");
 }
 
 
-void StringSetInsertAllKeys ( const StringSet & _sourceSet, StringSet & _targetSet )
+void StringSetInsertAllKeys(const StringSet & _sourceSet, StringSet & _targetSet)
 {
-    StringList::Node * pNode = _sourceSet.m_data.m_pFirst;
-    while ( pNode )
-    {
-        StringSetInsertKey( _targetSet, pNode->m_value );
-        pNode = pNode->m_pNext;
-    }
+	HashTable::Node * pNode = _sourceSet.m_data;
+	while (pNode)
+	{
+		StringSetInsertKey(_targetSet, pNode->m_value);
+		pNode = pNode->m_pNext;
+	}
 }
