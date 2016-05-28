@@ -1,19 +1,16 @@
 #include "string_set.hpp"
 #include "hash_table.hpp"
 
-#include <cassert>
-
-
 struct StringSet
 {
 	HashTable* m_data;
 };
 
 
-StringSet * StringSetCreate()
+StringSet * StringSetCreate(int initSize)
 {
 	StringSet * pSet = new StringSet;
-	pSet->m_data = HashTableCreate(100);
+	pSet->m_data = HashTableCreate(initSize);
 	return pSet;
 }
 
@@ -39,14 +36,7 @@ bool StringSetIsEmpty(const StringSet & _set)
 
 bool StringSetHasKey(const StringSet & _set, std::string _key)
 {
-	StringList::Node * pNode = _set.m_data.m_pFirst;
-	while (pNode)
-	{
-		if (pNode->m_value == _key)
-			return true;
-		pNode = pNode->m_pNext;
-	}
-	return false;
+	return HashTableHasKey(*_set.m_data, _key);
 }
 
 
@@ -54,36 +44,17 @@ void StringSetInsertKey(StringSet & _set, std::string _key)
 {
 	if (!StringSetHasKey(_set, _key))
 	{
-		std::string item = _key.copy()
-			HashTableInsert(*_set.m_data, _key, _key);
+		char* buffer = new char[_key.length()+1];
+		memcpy(buffer, _key.data(),_key.length()*sizeof(char));
+		buffer[_key.length()] = '\0';
+
+		HashTableInsert(*_set.m_data, buffer, buffer);
 	}
 
 }
 
 
-void StringSetDeleteKey(StringSet & _set, int _key)
+void StringSetDeleteKey(StringSet & _set, std::string _key)
 {
-	StringList::Node * pNode = _set.m_data.m_pFirst;
-	while (pNode)
-	{
-		if (pNode->m_value == _key)
-		{
-			StringListDeleteNode(_set.m_data, pNode);
-			return;
-		}
-		pNode = pNode->m_pNext;
-	}
-
-	assert(!"Key is unavailble!");
-}
-
-
-void StringSetInsertAllKeys(const StringSet & _sourceSet, StringSet & _targetSet)
-{
-	HashTable::Node * pNode = _sourceSet.m_data;
-	while (pNode)
-	{
-		StringSetInsertKey(_targetSet, pNode->m_value);
-		pNode = pNode->m_pNext;
-	}
+	HashTableRemoveKey(*_set.m_data, _key);
 }

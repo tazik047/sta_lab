@@ -59,7 +59,7 @@ unsigned int HashCode(std::string _key)
 {
 	unsigned int hash = 0;
 	unsigned int i = 0;
-	for (; i < _key.length; ++i)
+	for (; i < _key.length(); ++i)
 	{
 		hash += _key[i];
 		hash += (hash << 10);
@@ -152,6 +152,27 @@ std::string HashTableGet(const HashTable & _ht, std::string _key)
     return "";
 }
 
+bool HashTableHasKey(const HashTable & _ht, std::string _key)
+{
+	unsigned int hashCode = HashCode(_key);
+	int bucketNr = hashCode % _ht.m_tableSize;
+
+	for (int i = bucketNr; i < _ht.m_tableSize; i++)
+		if (_ht.m_pData[i].m_status == HashTable::Element::NOT_OCCUPIED)
+			break;
+		else if (_ht.m_pData[i].m_status == HashTable::Element::OCCUPIED &&
+			_ht.m_pData[i].m_key == _key)
+			return true;
+
+	for (int i = 0; i < bucketNr; i++)
+		if (_ht.m_pData[i].m_status == HashTable::Element::NOT_OCCUPIED)
+			break;
+		else if (_ht.m_pData[i].m_status == HashTable::Element::OCCUPIED &&
+			_ht.m_pData[i].m_key == _key)
+			return true;
+
+	return false;
+}
 
 void HashTableRemoveKey(HashTable & _ht, std::string _key)
 {

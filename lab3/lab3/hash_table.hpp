@@ -21,6 +21,7 @@ std::string HashTableGet ( const HashTable & _ht, std::string _key );
 
 void HashTableRemoveKey(HashTable & _ht, std::string _key);
 
+bool HashTableHasKey(const HashTable & _ht, std::string _key);
 
 #endif //  _HASH_TABLE_HPP_
 
